@@ -18,17 +18,17 @@ const jtrello = (function() {
 
   /* =================== Privata metoder nedan ================= */
   function captureDOMEls() {
-    DOM.$board = $('.board');
-    DOM.$listDialog = $('#list-creation-dialog');
-    DOM.$columns = $('.column');
-    DOM.$lists = $('.list');
-    DOM.$cards = $('.card');
+    DOM.$board = $('.board'); //rutan för alla columner
+    DOM.$listDialog = $('#list-creation-dialog'); //formuläret för att göra en ny lista
+    DOM.$columns = $('.column'); //alla columner för listor och kort
+    DOM.$lists = $('.list'); //listan
+    DOM.$cards = $('.card'); //kortet i listan
     
-    DOM.$newListButton = $('button#new-list');
-    DOM.$deleteListButton = $('.list-header > button.delete');
+    DOM.$newListButton = $('button#new-list'); //knappen för att skapa ny lista
+    DOM.$deleteListButton = $('.list-header > button.delete'); //knappen för att ta bort lista
 
-    DOM.$newCardForm = $('form.new-card');
-    DOM.$deleteCardButton = $('.card > button.delete');
+    DOM.$newCardForm = $('form.new-card'); //formuläret för att lägga till ett nytt kort
+    DOM.$deleteCardButton = $('.card > button.delete');//knappen för att ta bort ett kort
   }
 
   function createTabs() {}
@@ -49,21 +49,23 @@ const jtrello = (function() {
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
     event.preventDefault();
-    console.log("This should create a new list");
+    console.log("This should create a new list so much fun!");
   }
 
   function deleteList() {
-    console.log("This should delete the list you clicked on");
+    console.log("This should delete the list you clicked on!!!!");
+    $(this).closest('.list').remove();
+    // DOM.$lists.detach();
   }
 
   /* =========== Metoder för att hantera kort i listor nedan =========== */
   function createCard(event) {
     event.preventDefault();
-    console.log("This should create a new card");
+    console.log("This should create a new card woho yabadooo!");
   }
 
   function deleteCard() {
-    console.log("This should delete the card you clicked on");
+    console.log("This should delete the card you clicked on yaooo");
   }
 
   // Metod för att rita ut element i DOM:en

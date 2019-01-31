@@ -65,6 +65,7 @@ const jtrello = (function() {
   }
 
   function deleteCard() {
+    $(this).closest('.card').remove();
     console.log("This should delete the card you clicked on yaooo");
   }
 

@@ -49,6 +49,22 @@ const jtrello = (function() {
   /* ============== Metoder för att hantera listor nedan ============== */
   function createList() {
     event.preventDefault();
+  var newdiv = $('<div></div>');
+  newdiv.addClass('column');
+ var listdiv = $('<div></div>');
+ listdiv.addClass('list');
+ listdiv.appendTo(newdiv);
+var namediv= $('<div></div>');
+namediv.addClass('list-header');
+var value=$('#text').val();
+namediv.html(value);
+var button=$('<button>X</button>');
+button.addClass('delete button');
+button.appendTo(namediv);
+namediv.appendTo(listdiv);
+$('.board').append(newdiv);
+
+
     console.log("This should create a new list so much fun!");
   }
 

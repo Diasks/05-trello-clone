@@ -1,7 +1,8 @@
 import $ from 'jquery';
 
-// require('webpack-jquery-ui');
+require('webpack-jquery-ui');
 import '../css/styles.css';
+// import { createReadStream } from 'fs';
 
 /**
  * jtrello
@@ -25,68 +26,30 @@ const jtrello = (function() {
     DOM.$cards = $('.card'); //kortet i listan
     
     DOM.$newListButton = $('button#new-list'); //knappen för att skapa ny lista
-    DOM.$deleteListButton = $('.list-header > button.delete'); //knappen för att ta bort lista
-
+    DOM.$deleteListButton = $('#delete-list'); //knappen för att ta bort lista
+    DOM.$newCardButton = $('button#new-card');
     DOM.$newCardForm = $('form.new-card'); //formuläret för att lägga till ett nytt kort
-    DOM.$deleteCardButton = $('.card > button.delete');//knappen för att ta bort ett kort
+    DOM.$deleteCardButton = $('button#delete-card');//knappen för att ta bort ett kort
   }
 
-  function createTabs() {}
-  function createDialogs() {}
+  // function createTabs() {}
+  // function createDialogs() {}
 
   /*
   *  Denna metod kommer nyttja variabeln DOM för att binda eventlyssnare till
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
+    $('.board').on('click', '#delete-button', deleteList);
     DOM.$newListButton.on('click', createList);
     DOM.$deleteListButton.on('click', deleteList);
-
-    DOM.$newCardForm.on('submit', createCard);
+    DOM.$newCardButton.on('submit', createCard);
     DOM.$deleteCardButton.on('click', deleteCard);
   }
 
-  /* ============== Metoder för att hantera listor nedan ============== */
-  function createList() {
-    event.preventDefault();
-  var newdiv = $('<div></div>');
-  newdiv.addClass('column');
- var listdiv = $('<div></div>');
- listdiv.addClass('list');
- listdiv.appendTo(newdiv);
-var namediv= $('<div></div>');
-namediv.addClass('list-header');
-var value=$('#text').val();
-namediv.html(value);
-var button=$('<button>X</button>');
-button.addClass('delete button');
-button.appendTo(namediv);
-namediv.appendTo(listdiv);
-$('.board').append(newdiv);
-
-
-    console.log("This should create a new list so much fun!");
-  }
-
-  function deleteList() {
-    console.log("This should delete the list you clicked on!!!!");
-    $(this).closest('.list').remove();
-  
-  }
-
-  /* =========== Metoder för att hantera kort i listor nedan =========== */
-  function createCard(event) {
-    event.preventDefault();
-    console.log("This should create a new card woho yabadooo!");
-  }
-
-  function deleteCard() {
-    $(this).closest('.card').remove();
-    console.log("This should delete the card you clicked on yaooo");
-  }
 
   // Metod för att rita ut element i DOM:en
-  function render() {}
+  // function render() {}
 
   /* =================== Publika metoder nedan ================== */
 
@@ -95,19 +58,103 @@ $('.board').append(newdiv);
     console.log(':::: Initializing JTrello ::::');
     // Förslag på privata metoder
     captureDOMEls();
-    createTabs();
-    createDialogs();
-
+    // createTabs();
+    // createDialogs();
     bindEvents();
   }
 
+
   // All kod här
+
+  function createList(event) {
+    event.preventDefault();
+    //kolumn
+  var newColumn= $('<div class="column"></div>');
+
+  //div med class list
+ var listdiv = $('<div class="list"></div>'); 
+ listdiv.appendTo(newColumn);
+//div med class list-header
+var listName= $('<div class="list-header"></div>'); 
+var value=$('#text').val();
+listName.html(value);
+//knapp för att ta bort lista
+var button=$('<button id="delete-list" class="button delete" button name="delete">X</button>');
+button.appendTo(listName);
+listName.appendTo(listdiv);
+//ul med class list-cards
+var newUl = $('<ul class="list-cards"></ul>');
+
+newUl.appendTo(listdiv);
+var liAdd = $('<li class="add-new"></li>');
+liAdd.appendTo(newUl);
+
+
+var form = $('<form class="new-card" action="index.html"></form>');
+form.html('<input type="text" id="cardname" name="title" placeholder="Please name the card">');
+form.appendTo(liAdd);
+var buttonAdd=$('<button id="add-card" class="button add" name="add">Add New card</button>');
+buttonAdd.appendTo(form);                     
+
+$('.board').append(newColumn);
+    console.log("This should create a new list so much fun!");
+  }
+
+
+
+
+
+$('body').on("click", "button[name=delete]", deleteList);
+$('body').on("click", "button[name=add]", createCard);
+
+
+
+ 
+
+  function createCard(event) {
+    event.preventDefault();
+var newLi=$('<li class="card"></li>');
+newLi.addClass('card');
+var livalue=$('#cardname').val();
+newLi.html(livalue);
+var button=$('<button id="delete-card">X</button>');
+button.addClass('button delete');
+button.appendTo(newLi);
+$(".list-cards").append(newLi);
+    console.log("This should create a new card woho ADJDAHyabadooo!");
+  }
+
+
+
+
+
+  
+
+  function deleteCard() {
+    
+    $(this).closest('.card').remove();
+    console.log("This should delete the card you clicked on yaooo");
+  
+  }
+
+  function deleteList () 
+  {
+    $(this).closest('.column').remove();
+    console.log("ta bort mig!!");
+  }
+
+
+
+
   return {
     init: init
-  };
+};
 })();
+
 
 //usage
 $("document").ready(function() {
   jtrello.init();
+
+
 });

@@ -108,16 +108,16 @@ input {
 .card {
   text-decoration: none;
   display: flex;
-  background: #fff;
+  background:white;
   color: #444;
-  padding: 6px 6px 6px 8px;
-  font-size: 14px;
+  padding: 12px 12px 12px 14px;
+  font-size: 12px;
   border-radius: 3px;
   border-bottom: 1px solid #ccc;
   margin-bottom: 5px;
   transition: transform 0.25s ease;
   transition: opacity 0.25s ease;
-  height: 16px;
+  height: 20x;
   position: relative;
   z-index: 0;
 }
@@ -128,6 +128,11 @@ input {
   right: 10px;
   padding: 0;
 }
+.card #open-dialog{
+  position: absolute;
+  right: 20px;
+  color:black;
+}
 
 .ui-dialog {
   background: #e2e4e6;
@@ -136,21 +141,25 @@ input {
   z-index: 50;
 }
 
-.ui-dialog .ui-dialog-titlebar {
+.ui-dialog-titlebar {
   font-weight: bold;
   margin-bottom: 10px;
+ background-color: white;
+ color: red;
 }
 
 .ui-dialog .ui-dialog-titlebar-close {
-  display: none;
+  display: inline-flex;
 }
 
 .ui-dialog input {
   min-height: 24px;
+  color: pink;
 }
 
 .ui-dialog button {
-  margin-right: 8px;
+  margin-right: 15px;
+  color: orange;
 }
 
 .ui-button,
@@ -190,3 +199,22 @@ input {
   box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.3), 0px 0px 1px rgba(0, 0, 0, 0.5);
   transform: rotate(4deg);
 }
+
+#tabs {
+  border: 2px solid black;
+  display: inline-block;
+}
+
+#tabs-1 {
+  border: 2px solid red;
+}
+
+#tabs-2 {
+  border: 2px solid pink;
+}
+
+#tabs-3 {
+  border: 2px solid orange;
+}
+
+

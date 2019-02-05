@@ -22,8 +22,11 @@ const jtrello = (function() {
     DOM.$board = $('.board'); //rutan för alla columner
     DOM.$listDialog = $('#list-creation-dialog'); //formuläret för att göra en ny lista
     DOM.$columns = $('.column'); //alla columner för listor och kort
+    console.log(DOM.$columns);
     DOM.$lists = $('.list'); //listan
+    console.log(DOM.$lists);
     DOM.$cards = $('.card'); //kortet i listan
+    console.log(DOM.$cards);
     
     DOM.$newListButton = $('button#new-list'); //knappen för att skapa ny lista
     DOM.$deleteListButton = $('#delete-list'); //knappen för att ta bort lista
@@ -76,6 +79,7 @@ const jtrello = (function() {
  listdiv.appendTo(newColumn);
 //div med class list-header
 var listName= $('<div class="list-header"></div>'); 
+
 var value=$('#text').val();
 listName.html(value);
 //knapp för att ta bort lista
@@ -83,20 +87,34 @@ var button=$('<button id="delete-list" class="button delete" button name="delete
 button.appendTo(listName);
 listName.appendTo(listdiv);
 //ul med class list-cards
+var newDiv =$('<div class="divdialog"></div>');
+    newDiv.appendTo(listdiv);
 var newUl = $('<ul class="list-cards"></ul>');
+newUl.appendTo(newDiv);
 
-newUl.appendTo(listdiv);
+
 var liAdd = $('<li class="add-new"></li>');
 liAdd.appendTo(newUl);
 
 
 var form = $('<form class="new-card" action="index.html"></form>');
-form.html('<input type="text" id="cardname" name="title" placeholder="Please name the card">');
+form.html('<input type="text" class="cardname" name="title" placeholder="Please name the card"> <br> <input type="text" class="datepicker" placeholder="pick a duedate.." size="15"/>');
+$( function() {
+  $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
 form.appendTo(liAdd);
 var buttonAdd=$('<button id="add-card" class="button add" name="add">Add New card</button>');
-buttonAdd.appendTo(form);                     
+buttonAdd.appendTo(form);     
 
 $('.board').append(newColumn);
+
+$( function() {
+  $( ".list-cards" ).sortable({
+    connectWith: '.list-cards'
+  }).disableSelection();
+ 
+});
+
     console.log("This should create a new list so much fun!");
   }
 
@@ -106,25 +124,82 @@ $('.board').append(newColumn);
 
 $('body').on("click", "button[name=delete]", deleteList);
 $('body').on("click", "button[name=add]", createCard);
+$('body').on("click", "button[name=deletecard]", deleteCard);
+$('body').on("click", "button[name=buttondialog]", openDialog);
 
 
 
+    
+  
+	
  
+
+
 
   function createCard(event) {
     event.preventDefault();
 var newLi=$('<li class="card"></li>');
-newLi.addClass('card');
-var livalue=$('#cardname').val();
-newLi.html(livalue);
-var button=$('<button id="delete-card">X</button>');
-button.addClass('button delete');
-button.appendTo(newLi);
-$(".list-cards").append(newLi);
-    console.log("This should create a new card woho ADJDAHyabadooo!");
+var livalue=$('.cardname').val();
+var datevalue=$( ".datepicker").val();
+newLi.text(livalue + ' ' + datevalue);
+var buttonDialog = $('<button id="open-dialog" class="button dialog" name="buttondialog" data-toggle="modal" data-target="#myModal">Y</button>');
+var buttonDelete = $('<button id="delete-card" class="button delete" name="deletecard">X</button>');
+newLi.append(buttonDialog, buttonDelete);
+$(this).closest('.list-cards').append(newLi);
+
+     console.log("This should create a new card woho ADJDAHyabadooo!");
   }
 
 
+
+
+
+function openDialog(e) {
+  e.preventDefault();
+
+ 
+      $('#myModal').modal('show');
+    
+$('<div class="show.bs.modal" id="myModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><p>Modal body text goes here.</p></div><div class="modal-footer"><button type="button" class="btn btn-primary">Save changes</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div></div></div></div>');
+  
+//   var dialogTabs=$('<div id="dialog"><div id="tabs"><ul><li><a href="#tab1">tab1</a> </li></ul></div></div>');
+// dialogTabs.appendTo('.card');
+//   tabLi.appendTo(tabUl);
+// tabLiLink.appendTo(tabLi);
+// tabUl.appendTo(tabDiv);
+// tabUl.appendTo(tabDiv);
+// var newestDiv =$('<div id="tab1">Content</div>')
+// newestDiv.appendTo(tabDiv);
+// tabDiv.appendTo('.card');
+
+// $(function() {
+//   $("#tabs").tabs();
+//   $("#dialog").dialog();
+// });
+  // $('.card').dialog();
+  // $( ".card" ).dialog();
+
+  // $( function() {
+  //   $( ".card" ).dialog();
+  // } );
+//   var tabDiv=$('<div id="tabs"></div>');
+// var tabUl=$('<ul></ul>');
+// tabUl.appendTo(tabDiv);
+// var tabLi=$('<li></li>');
+// tabLi.appendTo(tabUl);
+// var tabA=$('<a href="#tabs-1"></a><a href="#tabs-2"></a><a href="#tabs-3"></a>');
+// tabA.appendTo(tabLi);
+// var tabADiv=$('<div id="tabs-1"></div><div id="tabs-2"></div><div id="tabs-3"></div>');
+// tabADiv.html('<p>Tab!</p>');
+// tabADiv.appendTo(tabLi);
+// tabDiv.appendTo('.card'); 
+  console.log("kör mig!");
+
+// $( function() {
+//   $( "#tabs" ).tabs();
+//      } );
+
+}
 
 
 

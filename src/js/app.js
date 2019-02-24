@@ -87,7 +87,7 @@ var button=$('<button id="delete-list" class="button delete" button name="delete
 button.appendTo(listName);
 listName.appendTo(listdiv);
 //ul med class list-cards
-var newDiv =$('<div class="divdialog"></div>');
+var newDiv =$('<div class="divdialog" id="divdialog"></div>');
     newDiv.appendTo(listdiv);
 var newUl = $('<ul class="list-cards"></ul>');
 newUl.appendTo(newDiv);
@@ -98,7 +98,7 @@ liAdd.appendTo(newUl);
 
 
 var form = $('<form class="new-card" action="index.html"></form>');
-form.html('<input type="text" class="cardname" name="title" placeholder="Please name the card"> <br> <input type="text" class="datepicker" placeholder="pick a duedate.." size="15"/>');
+form.html('<input type="text" id="cardname" class="cardname" name="title" placeholder="Please name the card"> <br> <input type="text" id="datepicker" class="datepicker" placeholder="pick a duedate.." size="15"/>');
 $( function() {
   $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
@@ -138,11 +138,13 @@ $('body').on("click", "button[name=buttondialog]", openDialog);
 
   function createCard(event) {
     event.preventDefault();
-var newLi=$('<li class="card"></li>');
-var livalue=$('.cardname').val();
-var datevalue=$( ".datepicker").val();
+var newLi=$('<li class="card" id="card"></li>');
+var livalue=$('#cardname').val();
+var datevalue=$( "#datepicker").val();
+
+
 newLi.text(livalue + ' ' + datevalue);
-var buttonDialog = $('<button id="open-dialog" class="button dialog" name="buttondialog" data-toggle="modal" data-target="#myModal">Y</button>');
+var buttonDialog = $('<button id="open-dialog" class="button dialog" name="buttondialog">Y</button>');
 var buttonDelete = $('<button id="delete-card" class="button delete" name="deletecard">X</button>');
 newLi.append(buttonDialog, buttonDelete);
 $(this).closest('.list-cards').append(newLi);
@@ -153,15 +155,34 @@ $(this).closest('.list-cards').append(newLi);
 
 
 
+  function openDialog() {
 
-function openDialog(e) {
-  e.preventDefault();
+    $("#card").dialog({
+      title: "Update your card",
+      autoOpen: true,
+      modal: true,
+      height: 300,
+      width: 500,
+      show: {
+        effect: "fade",
+        duration: 500
+      },
+      hide: {
+        effect: "fade",
+        duration: 500
+      },
+      buttons: {
+        Cancel: function() {
+        $(this).dialog("close");
+      }
+    }
 
- 
-      $('#myModal').modal('show');
-    
-$('<div class="show.bs.modal" id="myModal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><p>Modal body text goes here.</p></div><div class="modal-footer"><button type="button" class="btn btn-primary">Save changes</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div></div></div></div>');
-  
+    // createTabs();
+
+
+    // });
+  }
+
 //   var dialogTabs=$('<div id="dialog"><div id="tabs"><ul><li><a href="#tab1">tab1</a> </li></ul></div></div>');
 // dialogTabs.appendTo('.card');
 //   tabLi.appendTo(tabUl);
@@ -193,13 +214,11 @@ $('<div class="show.bs.modal" id="myModal" tabindex="-1" role="dialog"><div clas
 // tabADiv.html('<p>Tab!</p>');
 // tabADiv.appendTo(tabLi);
 // tabDiv.appendTo('.card'); 
-  console.log("kör mig!");
+
 
 // $( function() {
 //   $( "#tabs" ).tabs();
 //      } );
-
-}
 
 
 

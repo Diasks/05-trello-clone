@@ -116,7 +116,17 @@ $( function() {
 });
 
     console.log("This should create a new list so much fun!");
-  }
+
+
+    var state = true;
+    if ( state ) {
+      $( ".list" ).animate({
+        backgroundColor: "#FFC0CB",
+        color: "#fff",
+        width: 200
+      }, 1000 );
+
+  }}
 
 
 
@@ -158,7 +168,7 @@ $(this).closest('.list-cards').append(newLi);
   function openDialog() {
 
     $("#card").dialog({
-      title: "Update your card",
+      title: "Your fabulous card!",
       autoOpen: true,
       modal: true,
       height: 300,
@@ -176,51 +186,19 @@ $(this).closest('.list-cards').append(newLi);
         $(this).dialog("close");
       }
     }
-
-    // createTabs();
-
-
-    // });
+    
+  })
+  createTabs();
   }
 
-//   var dialogTabs=$('<div id="dialog"><div id="tabs"><ul><li><a href="#tab1">tab1</a> </li></ul></div></div>');
-// dialogTabs.appendTo('.card');
-//   tabLi.appendTo(tabUl);
-// tabLiLink.appendTo(tabLi);
-// tabUl.appendTo(tabDiv);
-// tabUl.appendTo(tabDiv);
-// var newestDiv =$('<div id="tab1">Content</div>')
-// newestDiv.appendTo(tabDiv);
-// tabDiv.appendTo('.card');
-
-// $(function() {
-//   $("#tabs").tabs();
-//   $("#dialog").dialog();
-// });
-  // $('.card').dialog();
-  // $( ".card" ).dialog();
-
-  // $( function() {
-  //   $( ".card" ).dialog();
-  // } );
-//   var tabDiv=$('<div id="tabs"></div>');
-// var tabUl=$('<ul></ul>');
-// tabUl.appendTo(tabDiv);
-// var tabLi=$('<li></li>');
-// tabLi.appendTo(tabUl);
-// var tabA=$('<a href="#tabs-1"></a><a href="#tabs-2"></a><a href="#tabs-3"></a>');
-// tabA.appendTo(tabLi);
-// var tabADiv=$('<div id="tabs-1"></div><div id="tabs-2"></div><div id="tabs-3"></div>');
-// tabADiv.html('<p>Tab!</p>');
-// tabADiv.appendTo(tabLi);
-// tabDiv.appendTo('.card'); 
-
-
-// $( function() {
-//   $( "#tabs" ).tabs();
-//      } );
-
-
+  
+ function createTabs(){
+ 
+var tabdiv=$('<div id="mytabs"><ul><li><a href="#tab1">Tab1</a></li><li><a href="#tab2">Tab2</a></li><li><a href="#tab3">Tab3</a></li></ul>');
+var contentdiv=$('<div id="tab1"><p>this is content 1</p> </div><div id="tab2"><p>this is content 2 </p></div><div id="tab3"><p>this is content 3 </p></div>'); 
+contentdiv.appendTo(tabdiv);
+tabdiv.appendTo('#card').tabs();
+}
 
   
 

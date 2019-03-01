@@ -19,40 +19,27 @@ const jtrello = (function() {
 
   /* =================== Privata metoder nedan ================= */
   function captureDOMEls() {
-    DOM.$board = $('.board'); //rutan för alla columner
-    DOM.$listDialog = $('#list-creation-dialog'); //formuläret för att göra en ny lista
-    DOM.$columns = $('.column'); //alla columner för listor och kort
-    console.log(DOM.$columns);
-    DOM.$lists = $('.list'); //listan
-    console.log(DOM.$lists);
-    DOM.$cards = $('.card'); //kortet i listan
-    console.log(DOM.$cards);
-    
-    DOM.$newListButton = $('button#new-list'); //knappen för att skapa ny lista
-    DOM.$deleteListButton = $('#delete-list'); //knappen för att ta bort lista
-    DOM.$newCardButton = $('button#new-card');
-    DOM.$newCardForm = $('form.new-card'); //formuläret för att lägga till ett nytt kort
-    DOM.$deleteCardButton = $('button#delete-card');//knappen för att ta bort ett kort
-  }
 
-  // function createTabs() {}
-  // function createDialogs() {}
+    DOM.$listDialog = $('#list-creation-dialog'); //formuläret för att göra en ny lista
+    DOM.$newListButton = $('button#new-list'); //knappen för att skapa ny lista
+   
+  }
 
   /*
   *  Denna metod kommer nyttja variabeln DOM för att binda eventlyssnare till
   *  createList, deleteList, createCard och deleteCard etc.
   */
   function bindEvents() {
-    $('.board').on('click', '#delete-button', deleteList);
     DOM.$newListButton.on('click', createList);
-    DOM.$deleteListButton.on('click', deleteList);
-    DOM.$newCardButton.on('submit', createCard);
-    DOM.$deleteCardButton.on('click', deleteCard);
+  $('body').on("click", "button[name=delete]", deleteList);
+  $('body').on("click", "button[name=add]", createCard);
+  $('body').on("click", "button[name=deletecard]", deleteCard);
+  $('body').on("click", "button[name=buttondialog]", openDialog);
   }
 
 
-  // Metod för att rita ut element i DOM:en
-  // function render() {}
+
+
 
   /* =================== Publika metoder nedan ================== */
 
@@ -61,17 +48,22 @@ const jtrello = (function() {
     console.log(':::: Initializing JTrello ::::');
     // Förslag på privata metoder
     captureDOMEls();
-    // createTabs();
-    // createDialogs();
     bindEvents();
+
   }
 
 
-  // All kod här
+
+
+
+
+
+
 
   function createList(event) {
     event.preventDefault();
     //kolumn
+
   var newColumn= $('<div class="column"></div>');
 
   //div med class list
@@ -115,32 +107,38 @@ $( function() {
  
 });
 
-    console.log("This should create a new list so much fun!");
 
 
-    var state = true;
-    if ( state ) {
+
+
       $( ".list" ).animate({
         backgroundColor: "#FFC0CB",
         color: "#fff",
         width: 200
       }, 1000 );
-
-  }}
-
+    }
 
 
 
 
-$('body').on("click", "button[name=delete]", deleteList);
-$('body').on("click", "button[name=add]", createCard);
-$('body').on("click", "button[name=deletecard]", deleteCard);
-$('body').on("click", "button[name=buttondialog]", openDialog);
 
 
 
-    
-  
+
+  (function($) {
+
+    $.fn.helloWorld = function() {
+
+        this.each(function() {
+            $(this).css("color", "#2F4F4F");
+             $(this).css("backgroundColor", "#FFEFD5"); 
+             $(this).css("border", "2px solid #000000"); 
+
+        });
+
+    }
+
+}(jQuery));
 	
  
 
@@ -148,6 +146,8 @@ $('body').on("click", "button[name=buttondialog]", openDialog);
 
   function createCard(event) {
     event.preventDefault();
+      
+
 var newLi=$('<li class="card" id="card"></li>');
 var livalue=$('#cardname').val();
 var datevalue=$( "#datepicker").val();
@@ -159,8 +159,27 @@ var buttonDelete = $('<button id="delete-card" class="button delete" name="delet
 newLi.append(buttonDialog, buttonDelete);
 $(this).closest('.list-cards').append(newLi);
 
-     console.log("This should create a new card woho ADJDAHyabadooo!");
-  }
+
+
+     $('.card').mouseover(function () {
+      $( this ).css("color", "#696969");
+      $( this ).css("backgroundColor", "#FFE4B5");
+    })
+   
+     
+
+
+
+    }
+
+
+
+
+
+  
+
+
+
 
 
 
@@ -195,9 +214,9 @@ $(this).closest('.list-cards').append(newLi);
  function createTabs(){
  
 var tabdiv=$('<div id="mytabs"><ul><li><a href="#tab1">Tab1</a></li><li><a href="#tab2">Tab2</a></li><li><a href="#tab3">Tab3</a></li></ul>');
-var contentdiv=$('<div id="tab1"><p>this is content 1</p> </div><div id="tab2"><p>this is content 2 </p></div><div id="tab3"><p>this is content 3 </p></div>'); 
+var contentdiv=$('<div id="tab1"><p>kul att du är här</p> </div><div id="tab2"><p>suprise!</p></div><div id="tab3"><p>tredje gången gillt! </p></div>'); 
 contentdiv.appendTo(tabdiv);
-tabdiv.appendTo('#card').tabs();
+tabdiv.appendTo('.card').tabs();
 }
 
   
@@ -205,14 +224,14 @@ tabdiv.appendTo('#card').tabs();
   function deleteCard() {
     
     $(this).closest('.card').remove();
-    console.log("This should delete the card you clicked on yaooo");
+
   
   }
 
   function deleteList () 
   {
     $(this).closest('.column').remove();
-    console.log("ta bort mig!!");
+
   }
 
 
@@ -227,6 +246,9 @@ tabdiv.appendTo('#card').tabs();
 //usage
 $("document").ready(function() {
   jtrello.init();
-
+  $('#new-list').helloWorld();
+  $('#text').helloWorld();
 
 });
+
+
